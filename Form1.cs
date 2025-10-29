@@ -17,7 +17,7 @@ namespace PictureView
         {
             this.Height = 750;
             this.Width = 1200;
-            this.Text = "Vorm elementidega";
+            this.Text = "Picture View";
 
             tree = new TreeView();
             tree.Dock = DockStyle.Left;
@@ -105,15 +105,15 @@ namespace PictureView
 
         private void Tree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            
+            // Удаляем все элементы, кроме дерева
             foreach (Control c in this.Controls.OfType<Control>().ToList())
             {
                 if (c != tree) this.Controls.Remove(c);
             }
 
+           
             if (e.Node.Text == "PictureView")
             {
-                
                 this.Controls.Add(line);
                 this.Controls.Add(chkFull);
                 this.Controls.Add(btn1);
@@ -121,9 +121,17 @@ namespace PictureView
                 this.Controls.Add(btn3);
                 this.Controls.Add(btn4);
             }
+            
+            else if (e.Node.Text == "Math Quiz")
+            {
+                Form2 quizForm = new Form2(); 
+                quizForm.Show();            
+            }
 
+           
             this.Controls.Add(tree);
         }
+
 
         private void ChkFull_CheckedChanged(object sender, EventArgs e)
         {

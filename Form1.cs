@@ -127,8 +127,13 @@ namespace PictureView
                 Form2 quizForm = new Form2(); 
                 quizForm.Show();            
             }
+            else if (e.Node.Text == "Matching Game")
+            {
+                FormMatchingGame matchingForm = new FormMatchingGame();
+                matchingForm.Show();
+            }
 
-           
+
             this.Controls.Add(tree);
         }
 

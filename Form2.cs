@@ -237,7 +237,7 @@ namespace PictureView
 
             // Кнопка запуска
             StartButton = new Button();
-            StartButton.Text = "Start the quiz";
+            StartButton.Text = "Start mang";
             StartButton.Size = new Size(180, 50);
             AutoSize = true;
             StartButton.Font = new Font("Arial", 14, FontStyle.Bold);
@@ -285,7 +285,7 @@ namespace PictureView
 
             // Start the timer.
             timeLeft = 30;
-            timeLabel.Text = "30 seconds";
+            timeLabel.Text = "30 secondid";
             timer1.Start();
         }
 
@@ -307,7 +307,7 @@ namespace PictureView
             {
                
                 timer1.Stop();
-                MessageBox.Show("You got all the answers right!", "Congratulations!");
+                MessageBox.Show("Koik vastused on oige!", "Vaha hea!");
                 StartButton.Enabled = true;
             }
             else if (timeLeft > 0)
@@ -315,14 +315,14 @@ namespace PictureView
               
                 
                 timeLeft = timeLeft - 1;
-                timeLabel.Text = timeLeft + " seconds";
+                timeLabel.Text = timeLeft + " secundid";
             }
             else
             {
                
                 timer1.Stop();
-                timeLabel.Text = "Time's up!";
-                MessageBox.Show("You didn't finish in time.", "Sorry!");
+                timeLabel.Text = "Aeg lopp!";
+                MessageBox.Show("Sa ei kirjutanud koik vastused!");
                 sum.Value = addend1 + addend2;
                 answer2.Value = minuend - subtrahend;
                 answer3.Value = multiplicand * multiplier;

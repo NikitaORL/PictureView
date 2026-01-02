@@ -9,9 +9,12 @@ namespace PictureView
     {
         TreeView tree;
         Button btn1, btn2, btn3, btn4, btn5;
+        Button btnResetBg, btnToggleTree; // новые кнопки
         PictureBox pic;
         CheckBox chkFull;
         Panel line;
+
+        bool treeVisible = true; // для отслеживания видимости дерева
 
         public Form1()
         {
@@ -37,16 +40,15 @@ namespace PictureView
             // Линия
             line = new Panel();
             line.BackColor = Color.Gray;
-            line.Size = new Size(1200, 3);     
+            line.Size = new Size(1200, 3);
             line.Location = new Point(120, 560);
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Кнопки
             btn1 = new Button();
             btn1.Text = "Show Picture";
             btn1.Location = new Point(250, 600);
-            btn1.Size = new Size(120, 30); 
+            btn1.Size = new Size(120, 30);
             btn1.Click += Btn_Click_Show;
             btn1.BackColor = Color.LightGray;
 
@@ -78,9 +80,23 @@ namespace PictureView
             btn5.Click += Btn_Click_Filter;
             btn5.BackColor = Color.LightGray;
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // Новая кнопка Reset Background
+            btnResetBg = new Button();
+            btnResetBg.Text = "Reset Background";
+            btnResetBg.Location = new Point(900, 600);
+            btnResetBg.Size = new Size(150, 30);
+            btnResetBg.Click += BtnResetBg_Click;
+            btnResetBg.BackColor = Color.LightGray;
+            this.Controls.Add(btnResetBg);
 
-
+            // Новая кнопка Show/Hide Tree
+            btnToggleTree = new Button();
+            btnToggleTree.Text = "Hide Tree";
+            btnToggleTree.Location = new Point(1070, 600);
+            btnToggleTree.Size = new Size(100, 30);
+            btnToggleTree.Click += BtnToggleTree_Click;
+            btnToggleTree.BackColor = Color.LightGray;
+            this.Controls.Add(btnToggleTree);
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Галочка
@@ -88,7 +104,6 @@ namespace PictureView
             chkFull.Text = "Strech";
             chkFull.Location = new Point(130, 600);
             chkFull.CheckedChanged += ChkFull_CheckedChanged;
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Картинка
@@ -97,9 +112,8 @@ namespace PictureView
             pic.Location = new Point(120, 0);
             pic.SizeMode = PictureBoxSizeMode.StretchImage;
             try { pic.Image = Image.FromFile(@"..\\..\\ImagesView\\ForView.jpg"); } catch { }
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             this.Resize += Form1_Resize;
         }
 
@@ -111,7 +125,6 @@ namespace PictureView
                 if (c != tree) this.Controls.Remove(c);
             }
 
-           
             if (e.Node.Text == "PictureView")
             {
                 this.Controls.Add(line);
@@ -120,12 +133,13 @@ namespace PictureView
                 this.Controls.Add(btn2);
                 this.Controls.Add(btn3);
                 this.Controls.Add(btn4);
+                this.Controls.Add(btnResetBg);
+                this.Controls.Add(btnToggleTree);
             }
-            
             else if (e.Node.Text == "Math Quiz")
             {
-                Form2 quizForm = new Form2(); 
-                quizForm.Show();            
+                Form2 quizForm = new Form2();
+                quizForm.Show();
             }
             else if (e.Node.Text == "Matching Game")
             {
@@ -133,10 +147,8 @@ namespace PictureView
                 matchingForm.Show();
             }
 
-
             this.Controls.Add(tree);
         }
-
 
         private void ChkFull_CheckedChanged(object sender, EventArgs e)
         {
@@ -145,13 +157,10 @@ namespace PictureView
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-           
             UpdatePictureSize();
-
-            
             line.Width = this.ClientSize.Width - 250;
         }
-        // 
+
         private void UpdatePictureSize()
         {
             if (chkFull.Checked)
@@ -161,15 +170,13 @@ namespace PictureView
             }
             else
             {
-                
                 pic.Size = new Size(800, 500);
                 pic.Location = new Point(120, 0);
             }
         }
 
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //Функции для PictureView
+        // Функции для PictureView
         private void Btn_Click_Show(object sender, EventArgs e)
         {
             this.Controls.Add(pic);
@@ -182,28 +189,36 @@ namespace PictureView
 
         private void Btn_Click_Close(object sender, EventArgs e)
         {
-            this.Close(); 
+            this.Close();
         }
-
-
 
         private void Btn_Click_SetBackground(object sender, EventArgs e)
         {
             using (ColorDialog colorDialog = new ColorDialog())
             {
-
                 if (colorDialog.ShowDialog() == DialogResult.OK)
                 {
-                    this.BackColor = colorDialog.Color;                                          
+                    this.BackColor = colorDialog.Color;
                 }
             }
         }
 
         private void Btn_Click_Filter(object sender, EventArgs e)
         {
-            
         }
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+        private void BtnResetBg_Click(object sender, EventArgs e)
+        {
+            this.BackColor = SystemColors.Control;
+        }
+
+        private void BtnToggleTree_Click(object sender, EventArgs e)
+        {
+            treeVisible = !treeVisible;
+            tree.Visible = treeVisible;
+            btnToggleTree.Text = treeVisible ? "Hide Tree" : "Show Tree";
+        }
+        // ==========================
     }
 }
